@@ -1,0 +1,27 @@
+# core scheme
+
+skelex = [
+	files = [
+		src.src log.log
+		core = [
+			ypp.ypp lpp.lpp hpp.hpp cpp.cpp
+		]
+	]
+	Makefile .gitignore README.md
+]
+
+Makefile = [
+
+log.log: ./exe.exe src.src
+	./exe.exe < src.src > log.log && tail $(TAIL) log.log
+C = cpp.cpp ypp.tab.cpp lex.yy.c
+H = hpp.hpp ypp.tab.hpp
+CXXFLAGS += -std=gnu++11
+./exe.exe: $(C) $(H) Makefile
+	$(CXX) $(CXXFLAGS) -o $@ $(C)
+ypp.tab.cpp: ypp.ypp
+	bison $<
+lex.yy.c: lpp.lpp
+	flex $<
+
+]

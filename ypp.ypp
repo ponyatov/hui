@@ -1,0 +1,15 @@
+%{
+#include "hpp.hpp"
+%}
+%defines %union { Sym*o; }
+%token <o> SYM
+%type <o> ex scalar list
+%%
+REPL : | REPL ex { cout << $2->dump() << endl; } ;
+scalar : SYM ;
+ex : scalar
+;
+list :				{ $$=new List(); }
+	| list ex		{ $$=$1; $$->push($2); }
+;
+%%

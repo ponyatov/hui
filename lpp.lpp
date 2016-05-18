@@ -1,0 +1,14 @@
+%{
+#include "hpp.hpp"
+%}
+%option yylineno
+%option noyywrap
+%%
+#[^\n]*				{}
+
+^\.end				{yyterminate();}
+
+[a-zA-Z0-9_]+		TOC(Sym,SYM)
+
+[ \t\r\n]+			{}
+%%
