@@ -12,7 +12,7 @@ REPL : | REPL ex	{ cout << $2->dump();
 					  cout << "\n---------------------------------------";
 					  cout << $2->eval()->dump();
 					  cout << "\n=======================================\n"; };
-scalar : SYM | NUM | STR ;
+scalar : SYM | NUM { $$=new Sym("num",$1->val); } | STR ;
 ex : scalar
 	| TILD ex		{ $$=$1; $$->push($2); }
 	| LP ex RP		{ $$=$2; }

@@ -28,6 +28,15 @@ Sym* Sym::eq(Sym*o) { env[val]=o;
 Sym* Sym::colon(Sym*o) { return new Sym(val,o->val); }
 
 Str::Str(string V):Sym("str",V) {}
+string Str::tagval() { return tagstr(); }
+string Sym::tagstr() { string S = tag+":'";
+	for (int i=0,e=val.size();i<e;i++)
+		switch (val[i]) {
+			case '\t': S += "\\t"; break;
+			case '\n': S += "\\n"; break;
+			default: S += val[i];
+		}
+	return S+"'"; }
 
 List::List():Sym("list","[]") {}
 
@@ -41,7 +50,14 @@ Sym* Op::eval() {
 	return this;
 }
 
+Fn::Fn(string V, FN F):Sym("fn",V) { fn=F; }
+Sym* Fn::at(Sym*o) { return fn(o); }
+
 File::File(string V):Sym("file",V) {}
+Sym* File::file(Sym*o) { return new File(o->val); }
+Sym* File::eq(Sym*o) { push(o); return o; }
 
 map<string,Sym*> env;
-void env_init() {}
+void env_init() {
+	env["file"] = new Fn("file",File::file);
+}

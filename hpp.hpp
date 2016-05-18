@@ -21,13 +21,15 @@ struct Sym {
 extern map<string,Sym*> env;
 extern void env_init();
 
-struct Str: Sym { Str(string); };
+struct Str: Sym { Str(string); string tagval(); };
 
 struct List: Sym { List(); };
 
 struct Op: Sym { Op(string); Sym*eval(); };
+typedef Sym* (*FN)(Sym*);
+struct Fn: Sym { Fn(string,FN); FN fn; Sym*at(Sym*); };
 
-struct File: Sym { File(string); };
+struct File: Sym { File(string); static Sym* file(Sym*); Sym*eq(Sym*); };
 
 extern int yylex();
 extern int yylineno;

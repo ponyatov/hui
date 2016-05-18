@@ -1,4 +1,10 @@
-# core scheme
+###############################################################################
+## core scheme
+###############################################################################
+
+#######################################
+## lexical skeleton
+#######################################
 
 skelex = [
 	src=file:'src.src' log=file:'log.log'
@@ -7,10 +13,40 @@ skelex = [
 			ypp=file:'ypp.ypp' lpp=file:'lpp.lpp' 
 			hpp=file:'hpp.hpp' cpp=file:'cpp.cpp'
 		]
-		'Makefile'
+		make=file:'Makefile'
 	]
-	'.gitignore'
+	'.gitignore' bat=file:'bat.bat'
+] skelex
+
+bat = [ '@start .' 'gvim -p '+files/bl ] bat
+
+make = [ a 2 3.4 ] make
+
+.end
+
+
+#######################################
+## Makefile build script
+#######################################
+
+Makefile = [
+'log.log: ./exe.exe src.src'
+'	./exe.exe < src.src > log.log && tail $(TAIL) log.log'
+C = [ cpp tabc=file:'ypp.tab.cpp' 'lex.yy.c' ]
+H = [ hpp 'ypp.tab.hpp' ]
+'CXXFLAGS += -std=gnu++11'
+'./exe.exe: $(C) $(H) Makefile'
+'	$(CXX) $(CXXFLAGS) -o $@ $(C)'
+'ypp.tab.cpp: ypp.ypp'
+'	bison $<'
+'lex.yy.c: lpp.lpp'
+'	flex $<'
 ]
+Makefile C H
+
+.end
+
+
 
 [ skelex core files ]
 .end
@@ -38,16 +74,3 @@ Makefile
 x.x x.x
 .end
 
-log.log: ./exe.exe src.src
-	./exe.exe < src.src > log.log && tail $(TAIL) log.log
-C = cpp.cpp ypp.tab.cpp lex.yy.c
-H = hpp.hpp ypp.tab.hpp
-CXXFLAGS += -std=gnu++11
-./exe.exe: $(C) $(H) Makefile
-	$(CXX) $(CXXFLAGS) -o $@ $(C)
-ypp.tab.cpp: ypp.ypp
-	bison $<
-lex.yy.c: lpp.lpp
-	flex $<
-
-]
