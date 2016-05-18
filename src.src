@@ -7,8 +7,12 @@ skelex = [
 			ypp.ypp lpp.lpp hpp.hpp cpp.cpp
 		]
 	]
-	Makefile .gitignore README.md
+	file:Makefile file:'.gitignore' README.md
 ]
+
+[ skelex files core ]
+
+.end
 
 Makefile = [
 

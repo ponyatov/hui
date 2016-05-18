@@ -13,6 +13,9 @@ struct Sym {
 	vector<Sym*> nest; void push(Sym*);
 	virtual string tagval(); string tagstr(); string pad(int);
 	virtual string dump(int=0);
+	virtual Sym* eval();
+	virtual Sym* eq(Sym*);
+	virtual Sym* colon(Sym*);
 };
 
 extern map<string,Sym*> env;
@@ -21,6 +24,8 @@ extern void env_init();
 struct List: Sym { List(); };
 
 struct Op: Sym { Op(string); Sym*eval(); };
+
+struct File: Sym { File(string); };
 
 extern int yylex();
 extern int yylineno;
