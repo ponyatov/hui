@@ -11,13 +11,11 @@ string LexString;
 ^\.end				{yyterminate();}
 
 '					{BEGIN(lexstring); LexString=""; }
-<lexstring>'		{BEGIN(INITIAL); yylval.o = new Sym(LexString); return SYM;}
+<lexstring>'		{BEGIN(INITIAL); yylval.o = new Sym(LexString); return STR;}
+<lexstring>\n		{LexString+=yytext[0];}
 <lexstring>.		{LexString+=yytext[0];}
 
-\$\([A-Z]+\)				TOC(Sym,SYM)		/* make var */
-(\.\/)?[a-zA-Z]+\.[a-z]+	TOC(File,SYM)		/* file name */
-[a-z_][a-zA-Z_]*			TOC(Sym,SYM)		/* term */
-[A-Z][a-zA-Z_]*				TOC(Sym,SYM)		/* var */
+[a-zA-Z0-9_]+		TOC(Sym,SYM)
 
 \(					TOC(Op,LP)
 \)					TOC(Op,RP)

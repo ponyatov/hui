@@ -27,6 +27,8 @@ Sym* Sym::eq(Sym*o) { env[val]=o;
 	if (o->tag=="list" && o->val=="[]") o->val=val; return this; }
 Sym* Sym::colon(Sym*o) { return new Sym(val,o->val); }
 
+Str::Str(string V):Sym("str",V) {}
+
 List::List():Sym("list","[]") {}
 
 Op::Op(string V):Sym("op",V) {}

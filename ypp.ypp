@@ -2,7 +2,7 @@
 #include "hpp.hpp"
 %}
 %defines %union { Sym*o; }
-%token <o> SYM					/* symbol */
+%token <o> SYM NUM STR			/* symbol number 'string' */
 %token <o> LP RP LQ RQ LC RC	/* () [] {} */
 %token <o> EQ AT TILD			/* = @ ~ */
 %token <o> COLON DOT			/* : . */
@@ -12,7 +12,7 @@ REPL : | REPL ex	{ cout << $2->dump();
 					  cout << "\n---------------------------------------";
 					  cout << $2->eval()->dump();
 					  cout << "\n=======================================\n"; };
-scalar : SYM ;
+scalar : SYM | NUM | STR ;
 ex : scalar
 	| TILD ex		{ $$=$1; $$->push($2); }
 	| LP ex RP		{ $$=$2; }

@@ -1,8 +1,23 @@
 # core scheme
 
 skelex = [
+	src=file:'src.src' log=file:'log.log'
+	core = [
+		files = [
+			ypp=file:'ypp.ypp' lpp=file:'lpp.lpp' 
+			hpp=file:'hpp.hpp' cpp=file:'cpp.cpp'
+		]
+		'Makefile'
+	]
+	'.gitignore'
+]
+
+[ skelex core files ]
+.end
+
+skelex = [
 	files = [
-		src.src log.log
+		src=src.src log=log.log
 		core = [
 			ypp.ypp lpp.lpp hpp.hpp cpp.cpp
 		]
@@ -12,9 +27,16 @@ skelex = [
 
 [ skelex files core ]
 
+src log
 .end
 
-Makefile = [
+
+#Makefile = [
+#]
+Makefile
+
+x.x x.x
+.end
 
 log.log: ./exe.exe src.src
 	./exe.exe < src.src > log.log && tail $(TAIL) log.log

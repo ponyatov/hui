@@ -21,6 +21,8 @@ struct Sym {
 extern map<string,Sym*> env;
 extern void env_init();
 
+struct Str: Sym { Str(string); };
+
 struct List: Sym { List(); };
 
 struct Op: Sym { Op(string); Sym*eval(); };
