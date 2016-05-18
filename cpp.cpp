@@ -16,5 +16,9 @@ string Sym::dump(int depth) { string S = "\n"+pad(depth)+tagval();
 		S += (*it)->dump(depth+1);
 	return S; }
 
+List::List():Sym("list","[]") {}
+
+Op::Op(string V):Sym("op",V) {}
+
 map<string,Sym*> env;
 void env_init() {}

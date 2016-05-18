@@ -18,6 +18,10 @@ struct Sym {
 extern map<string,Sym*> env;
 extern void env_init();
 
+struct List: Sym { List(); };
+
+struct Op: Sym { Op(string); Sym*eval(); };
+
 extern int yylex();
 extern int yylineno;
 extern char* yytext;

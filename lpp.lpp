@@ -8,7 +8,22 @@
 
 ^\.end				{yyterminate();}
 
-[a-zA-Z0-9_]+		TOC(Sym,SYM)
+\$\([A-Z]+\)		TOC(Sym,SYM)		/* make var */
+[a-z]+\.[a-z]+		TOC(Sym,SYM)		/* file name */
+[a-z_][a-zA-Z_]*	TOC(Sym,SYM)		/* term */
+[A-Z][a-zA-Z_]*		TOC(Sym,SYM)		/* var */
+
+\(					TOC(Op,LP)
+\)					TOC(Op,RP)
+\[					TOC(Op,LQ)
+\]					TOC(Op,RQ)
+\{					TOC(Op,LC)
+\}					TOC(Op,RC)
+
+\=					TOC(Op,EQ)
+\@					TOC(Op,AT)
+\~					TOC(Op,TILD)
+\.					TOC(Op,DOT)
 
 [ \t\r\n]+			{}
 %%

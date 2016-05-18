@@ -2,12 +2,21 @@
 #include "hpp.hpp"
 %}
 %defines %union { Sym*o; }
-%token <o> SYM
-%type <o> ex scalar list
+%token <o> SYM					/* symbol */
+%token <o> LP RP LQ RQ LC RC	/* () [] {} */
+%token <o> EQ AT TILD			/* = @ ~ */
+%token <o> DOT					/* . */
+%type <o> ex scalar list		/* [li st] {la:mbda} */
 %%
 REPL : | REPL ex { cout << $2->dump() << endl; } ;
 scalar : SYM ;
 ex : scalar
+	| TILD ex		{ $$=$1; $$->push($2); }
+	| LP ex RP		{ $$=$2; }
+	| LQ list RQ	{ $$=$2; }
+	| ex EQ ex		{ $$=$2; $$->push($1); $$->push($3); }
+	| ex AT ex		{ $$=$2; $$->push($1); $$->push($3); }
+	| ex DOT ex		{ $$=$2; $$->push($1); $$->push($3); }
 ;
 list :				{ $$=new List(); }
 	| list ex		{ $$=$1; $$->push($2); }
